@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
 func mergeSort(a1, a2 []int) []int {
@@ -33,16 +32,6 @@ func mergeSort(a1, a2 []int) []int {
 	return a
 }
 
-func heapsort(a []int) []int {
-	a = buildMaxHeap(a)
-	for i := len(a); i >= 2; i-- {
-		temp := a[0]
-		a[0] = a[i]
-		a[i] = temp
-
-	}
-}
-
 func insertionSort(a []int) []int {
 	for i := 0; i < len(a); i++ {
 		valueToInsert := a[i]
@@ -59,11 +48,47 @@ func insertionSort(a []int) []int {
 	return a
 }
 
+func quicksort(a []int, left, right int) {
+	pivot := a[int(left + (right - left) / 2)]
+	i := left
+	j  := right
+
+	for i <= j {
+		for a[i] < pivot {
+			i++
+		}
+		for a[j] > pivot {
+			j--
+		}
+
+		if i <= j {
+			temp := a[i]
+			a[i] = a[j]
+			a[j] = temp
+			i++
+			j--
+		}
+	}
+
+	if left < j {
+		quicksort(a, left, j)
+	}
+	fmt.Println(a)
+	if i < right {
+		quicksort(a, i, right)
+	}
+	fmt.Println(a)
+}
+
 func main() {
 	array1 := []int{4, 15, 16, 50}
 	array2 := []int{8, 23, 42, 108}
 	array3 := []int{23, 42, 4, 16, 8, 15} 
+	array4 := []int{2, 8, 7, 1, 3, 5, 6, 4}
 
 	fmt.Println(mergeSort(array1[0:], array2[0:]))
-	fmt.Println(insertionSort(array3[0:]))
+	fmt.Println(insertionSort(array3))
+	fmt.Println(array4, "---->");
+	quicksort(array4, 0, len(array4) - 1)
+	fmt.Println(array4);
 }
